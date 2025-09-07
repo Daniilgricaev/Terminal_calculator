@@ -1,0 +1,15 @@
+/.ssh/
+*.pem
+*.key
+*.rsa
+*.dsa
+*.ed25519
+id_rsa*
+id_dsa*
+id_ed25519*
+*.pub
+.DS_Store
+Thumbs.db
+*.exe
+*.out
+*.o
