@@ -3,7 +3,6 @@
 #include<cctype>
 #include<vector>
 #include<map>
-
 class shunting_yard{
     private:
         std::map<char,int> ch;
@@ -35,9 +34,9 @@ class shunting_yard{
             return higest;
         }
 };
-void String_parser(std::string example,std::string rpn,std::vector<int>stack){
+void String_parser(std::string example,std::string& rpn,std::vector<int>&stack){
     shunting_yard yard;
-    int i = 0,j=0;
+    int i = 0;
 
     while(example[i]!='\0'){
         if(isdigit(example[i])){
@@ -57,7 +56,7 @@ void String_parser(std::string example,std::string rpn,std::vector<int>stack){
     //     std::cout<<stack[i];
     // }
 }
-void Shunting_yard_alg(std::string& rpn,std::vector<int>& stack){
+void Shunting_yard_alg(std::string& rpn,std::vector<int>&stack){
     shunting_yard yard;
 
     auto perform_operation = [](int a,int b,char operation)->int{
