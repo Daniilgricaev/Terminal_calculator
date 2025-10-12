@@ -1,7 +1,9 @@
 #include<iostream>
 #include<string>
 #include<cctype>
+#include<cmath>
 #include<vector>
+#include<stdexcept>
 #include<map>
 class shunting_yard{
     private:
@@ -23,7 +25,7 @@ class shunting_yard{
                 return '\0';
             }
             if(rpn.length()==1){
-                return rpn[0];
+                std::invalid_argument("You can't divide by zero");
             }
             char higest = rpn[0];
             for(int i = 0;i<rpn.length();i++){
@@ -40,12 +42,17 @@ void String_parser(std::string example,std::string& rpn,std::vector<int>&stack){
 
     while(example[i]!='\0'){
         if(isdigit(example[i])){
-            int digit = example[i] -'0';
+            int digit = 0;
+            while(i<example.length() && isdigit(example[i])){
+                digit = digit * 10 +(example[i]-'0');
+                i++;
+            }
             stack.push_back(digit);
-        }else{
+        }   
+        else{
             rpn.push_back(example[i]);
+            i++;
         }
-        i++;
     }
     // std::cout<<std::endl;
     // for(int i =0;i<rpn.size();i++){
@@ -64,7 +71,14 @@ void Shunting_yard_alg(std::string& rpn,std::vector<int>&stack){
             case '+':return a+b;
             case '-':return a-b;
             case '*':return a*b;
-            case '/':return a/b;
+            case '/':
+                if(b == 0){
+                    std::cout<<"  Next time, don't use division by zero, it's a huge mistake!!!  "<<std::endl;
+                    return b/a;
+                }else{
+                    return a/b;
+                };
+            case '^':return pow(a,b);
             default:return 0;
         }
     };
@@ -102,9 +116,9 @@ int main(){
     std::string rpn;
     std::vector<int>stack;
 
-    std::cout<<"Enter your mathematical example"<<std::endl;
+    std::cout<<"Enter your mathematical example : ";
     std::getline(std::cin ,demo);
-
+    std::cout<<std::endl;
     for(char c:demo){
         if(c !=' '){
             example+=c;
@@ -114,6 +128,6 @@ int main(){
     std::cout<<example;
     String_parser(example,rpn,stack);
     Shunting_yard_alg(rpn,stack);
-    std::cout<<"Result :"<<stack[0]<<std::endl;
+    std::cout<<std::endl<<"Result :"<<stack[0]<<std::endl;
     return 0;
 }
